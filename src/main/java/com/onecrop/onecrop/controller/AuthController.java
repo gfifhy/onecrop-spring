@@ -1,27 +1,29 @@
 package com.onecrop.onecrop.controller;
 
-import com.onecrop.onecrop.repository.UserRepository;
+import com.onecrop.onecrop.dto.UserRequestDto;
+import com.onecrop.onecrop.dto.UserResponseDto;
+import com.onecrop.onecrop.service.UserService;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+
 
 @RestController
-@RequestMapping("/auth")
 @AllArgsConstructor
-@Getter
-@Setter
+@RequestMapping("/auth")
 public class AuthController {
 
-    private final UserRepository userRepository;
+    private final UserService userService;
 
 
     @PostMapping("/register")
-    public String register(@RequestBody User user) {}
-
-
-
+    public ResponseEntity<UserResponseDto> register(@Valid @RequestBody UserRequestDto user){
+        return new ResponseEntity<>(userService.save(user), HttpStatus.CREATED);
+    }
 }
