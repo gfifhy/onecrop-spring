@@ -1,5 +1,6 @@
 package com.onecrop.onecrop.dto;
 
+import com.onecrop.onecrop.model.Role;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Getter;
@@ -26,5 +27,7 @@ public class UserResponseDto {
 
     @NotEmpty
     private String lastName;
+
+    private Role role;
 
 }

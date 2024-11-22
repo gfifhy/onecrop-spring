@@ -27,4 +27,7 @@ public class UserRequestDto {
         @NotEmpty(message = "lastname is required")
         private String lastName;
 
+        @NotEmpty
+        private String role;
+
 }
