@@ -1,4 +1,4 @@
-package com.onecrop.onecrop.Exception;
+package com.onecrop.onecrop.exception;
 
 public class EntityExistException extends RuntimeException{
     public EntityExistException(String message) {

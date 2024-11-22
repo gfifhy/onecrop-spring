@@ -26,6 +26,7 @@ public class UserMapper {
         userResponse.setUsername(user.getUsername());
         userResponse.setFirstName(user.getFirstName());
         userResponse.setLastName(user.getLastName());
+        userResponse.setRole(user.getRole());
         return userResponse;
     }
 }
