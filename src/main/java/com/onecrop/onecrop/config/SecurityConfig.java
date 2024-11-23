@@ -2,8 +2,10 @@ package com.onecrop.onecrop.config;
 
 
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -17,14 +19,27 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import java.util.Arrays;
+
 
 @EnableWebSecurity
 @Configuration
-@AllArgsConstructor
 public class SecurityConfig {
 
 
     private final UserDetailsService userDetailsService;
+
+    @Value("${spring.onecrop.allowed-origin}")
+    private String allowedOrigin;
+
+    public SecurityConfig(UserDetailsService userDetailsService,
+                          @Value("${spring.onecrop.allowed-origin}") String allowedOrigin) {
+        this.userDetailsService = userDetailsService;
+        this.allowedOrigin = allowedOrigin;
+    }
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -40,6 +55,11 @@ public class SecurityConfig {
                 )
                 .sessionManagement( (session) -> session
                         .sessionCreationPolicy(SessionCreationPolicy.ALWAYS))
+                .logout(logout -> logout
+                        .logoutUrl("/auth/logout")
+                        .invalidateHttpSession(true)
+                        .clearAuthentication(true)
+                        .deleteCookies("JSESSIONID"))
                 .httpBasic(AbstractHttpConfigurer::disable)
                 .formLogin(AbstractAuthenticationFilterConfigurer::disable);
 
@@ -47,7 +67,17 @@ public class SecurityConfig {
     }
 
     @Bean
-    public AuthenticationManager authenticationManager(HttpSecurity httpSecurity) throws Exception {
+    UrlBasedCorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowedOrigins(Arrays.asList(allowedOrigin));
+        configuration.setAllowedMethods(Arrays.asList("GET","POST", "PUT", "DELETE", "PATCH","OPTIONS"));
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
+    }
+
+    @Bean
+    public AuthenticationManager authenticationManager() {
         //return httpSecurity.getSharedObject(AuthenticationManagerBuilder.class).build();
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
         authProvider.setUserDetailsService(userDetailsService);
