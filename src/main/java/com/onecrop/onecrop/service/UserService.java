@@ -51,8 +51,8 @@ public class UserService {
 
         Optional<Role> role= roleRepository.findByName(user.getRole());
         if(role.isEmpty()) {
-            var userRole = roleRepository.findByName("ROLE_USER").orElseThrow(() ->
-                    new EntityDoesntExistException("Role not found: ROLE_USER"));
+            var userRole = roleRepository.findByName("ROLE_BUYER").orElseThrow(() ->
+                    new EntityDoesntExistException("Role not found: "));
             userEntity.setRole(userRole);
         }
         else {
