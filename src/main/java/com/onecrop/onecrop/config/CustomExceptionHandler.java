@@ -1,7 +1,7 @@
 package com.onecrop.onecrop.config;
 
 
-import com.onecrop.onecrop.Exception.EntityExistException;
+import com.onecrop.onecrop.exception.EntityExistException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
