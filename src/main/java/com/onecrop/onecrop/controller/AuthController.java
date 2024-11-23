@@ -5,7 +5,6 @@ import com.onecrop.onecrop.dto.UserRequestDto;
 import com.onecrop.onecrop.dto.UserResponseDto;
 import com.onecrop.onecrop.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;

@@ -5,7 +5,6 @@ import com.onecrop.onecrop.model.Role;
 import com.onecrop.onecrop.model.User;
 import com.onecrop.onecrop.repository.RoleRepository;
 import com.onecrop.onecrop.repository.UserRepository;
-import com.onecrop.onecrop.exception.EntityDoesntExistException;
 import lombok.AllArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
