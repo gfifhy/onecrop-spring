@@ -52,22 +52,11 @@ public class AuthController {
         }
     }
 
-    @GetMapping("/session")
-    public String getSession(HttpSession session) {
-        // Get the session ID
-        String sessionId = session.getId();
-        return "Session ID: " + sessionId;
-    }
-
     @GetMapping("/debug/user")
     public Map<String, Object> getCurrentUser(HttpServletRequest request) {
-        // Retrieve authentication object
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
-        // Extract session token
         String sessionId = request.getSession().getId();
 
-        // Prepare response
         Map<String, Object> response = new HashMap<>();
         response.put("username", authentication.getName());
         response.put("authorities", authentication.getAuthorities());

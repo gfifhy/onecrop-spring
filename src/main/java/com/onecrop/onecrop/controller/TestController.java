@@ -11,6 +11,11 @@ import java.util.List;
 @RestController
 public class TestController {
 
+    @GetMapping("/")
+    public String home() {
+        return "WELCOME TO ONECROP";
+    }
+
     @GetMapping("/user/test")
     public List<String> userTest() {
         return new LinkedList<>(Arrays.asList("a", "b", "c"));
