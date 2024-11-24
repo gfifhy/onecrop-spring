@@ -62,8 +62,8 @@ Onecrop is a Spring Boot-based web application developed to enhance the agricult
 
 ---
 
-## Entity-Relationship Diagram 
-<iframe width="560" height="315" src='https://dbdiagram.io/e/6703acdafb079c7ebd9394da/6743789ce9daa85aca8a7a20'> </iframe>
+## [Entity-Relationship Diagram](https://dbdiagram.io/d/Onecrop-6703acdafb079c7ebd9394da)
+![ERD](ERD.png)
 
 --
 
