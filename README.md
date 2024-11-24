@@ -65,7 +65,7 @@ Onecrop is a Spring Boot-based web application developed to enhance the agricult
 ## [Entity-Relationship Diagram](https://dbdiagram.io/d/Onecrop-6703acdafb079c7ebd9394da)
 ![ERD](ERD.png)
 
---
+---
 
 ## Usage
 After starting the application, the API will be available at http://localhost:8080. Some example endpoints include:
