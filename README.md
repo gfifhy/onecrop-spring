@@ -55,7 +55,7 @@ Onecrop is a Spring Boot-based web application developed to enhance the agricult
 ## Technologies Used
 - Java: Backend development.
 - Spring Boot: Framework for application development.
-- Spring Security: Secure the application with JWT.
+- Spring Security: Secure the application .
 - Maven: Dependency and build management.
 - MySQL: Database integration.
 - REST: API architecture.
@@ -69,7 +69,7 @@ Onecrop is a Spring Boot-based web application developed to enhance the agricult
 
 ## Usage
 After starting the application, the API will be available at http://localhost:8080. Some example endpoints include:
-# WIP
+### WIP
 - Authentication: `/api/auth`
 - User Management: `/api/users`
 - Products: `/api/products`
