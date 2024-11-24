@@ -1,6 +1,6 @@
 # Onecrop
 
-Onecrop is an agricultural e-commerce platform designed to connect businesses to clients (B2C). It facilitates the seamless exchange of goods and services in the agricultural sector, offering a modern, user-friendly platform for both sellers and buyers.
+Onecrop is an agricultural e-commerce platform designed to connect farmers to clients. It facilitates the seamless exchange of goods and services in the agricultural sector, offering a modern, user-friendly platform for both sellers and buyers.
 
 ## Table of Contents
 - [Introduction](#introduction)
