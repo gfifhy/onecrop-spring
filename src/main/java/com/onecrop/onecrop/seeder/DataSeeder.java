@@ -14,6 +14,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import java.time.Instant;
 import java.time.LocalDateTime;
 
 
@@ -47,7 +48,9 @@ public class DataSeeder implements CommandLineRunner {
                     "Signal Village",
                     "Taguig City",
                     "National Capital Region",
-                    "1639" );
+                    "1639",
+                    Instant.now(),
+                    Instant.now());
 
             Address sellerAddress = new Address(
                     null,
@@ -56,7 +59,9 @@ public class DataSeeder implements CommandLineRunner {
                     "Signal Village",
                     "Binan City",
                     "National Capital Region",
-                    "1639" );
+                    "1639" ,
+                    Instant.now(),
+                    Instant.now());
 
             Address buyerAddress = new Address(
                     null,
@@ -65,7 +70,9 @@ public class DataSeeder implements CommandLineRunner {
                     "Signal Village",
                     "Laoag City",
                     "National Capital Region",
-                    "1639" );
+                    "1639",
+                    Instant.now(),
+                    Instant.now());
 
 
             Role adminRole = roleRepository.findByName("ROLE_ADMIN").orElseThrow(() ->

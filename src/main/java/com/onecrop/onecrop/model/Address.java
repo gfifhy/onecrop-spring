@@ -39,11 +39,11 @@ public class Address {
     @Column(nullable = false)
     private String postalCode;
 
-    /*@CreatedDate
+    @CreatedDate
     private Instant createdAt;
 
     @LastModifiedDate
-    private Instant updatedAt;*/
+    private Instant updatedAt;
 
 
 

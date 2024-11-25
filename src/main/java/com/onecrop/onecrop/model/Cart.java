@@ -3,7 +3,6 @@ package com.onecrop.onecrop.model;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 
 import java.time.Instant;
@@ -28,8 +27,8 @@ public class Cart {
     @Column(nullable = false)
     private Integer quantity;
 
-    /*@CreatedDate
-    private Instant createdAt;*/
+    @CreatedDate
+    private Instant createdAt;
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)

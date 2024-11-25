@@ -32,9 +32,9 @@ public class Product {
     private User user;
 
 
-    /*@OneToOne
+    @OneToOne
     @JoinColumn(name = "category_id", nullable = false)
-    private Category category;*/
+    private Category category;
 
     @Column(nullable=false)
     private LocalDateTime createdAt;

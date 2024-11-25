@@ -27,11 +27,11 @@ public class Payment {
     @Column(nullable = false)
     private Double amount;
 
-    /*@CreatedDate
+    @CreatedDate
     private Instant createdAt;
 
     @LastModifiedDate
-    private Instant updatedAt;*/
+    private Instant updatedAt;
 
 
 }

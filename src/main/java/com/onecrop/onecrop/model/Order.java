@@ -34,11 +34,11 @@ public class Order {
     @Column
     private String status;
 
-    /*@CreatedDate
+    @CreatedDate
     private Instant createdAt;
 
     @LastModifiedDate
-    private Instant updatedAt;*/
+    private Instant updatedAt;
 
     @OneToOne
     @JoinColumn(name = "buyer_id", nullable = false)

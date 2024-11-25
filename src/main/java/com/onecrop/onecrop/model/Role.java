@@ -2,7 +2,6 @@ package com.onecrop.onecrop.model;
 
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotEmpty;
 import lombok.*;
 
 import java.util.UUID;
