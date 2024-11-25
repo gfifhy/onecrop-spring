@@ -1,14 +1,20 @@
 package com.onecrop.onecrop.seeder;
 
 import com.onecrop.onecrop.exception.EntityDoesntExistException;
+import com.onecrop.onecrop.model.Address;
 import com.onecrop.onecrop.model.Role;
 import com.onecrop.onecrop.model.User;
+import com.onecrop.onecrop.model.Wallet;
+import com.onecrop.onecrop.repository.AddressRepository;
 import com.onecrop.onecrop.repository.RoleRepository;
 import com.onecrop.onecrop.repository.UserRepository;
+import com.onecrop.onecrop.repository.WalletRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
+
+import java.time.LocalDateTime;
 
 
 @Component
@@ -18,6 +24,8 @@ public class DataSeeder implements CommandLineRunner {
     private final RoleRepository roleRepository;
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final WalletRepository walletRepository;
+    private final AddressRepository addressRepository;
 
     @Override
     public void run(String... args){
@@ -28,6 +36,38 @@ public class DataSeeder implements CommandLineRunner {
         }
 
         if (userRepository.count() == 0) {
+            Wallet adminWallet = new Wallet();
+            Wallet buyerWallet = new Wallet();
+            Wallet sellerWallet = new Wallet();
+
+            Address adminAddress = new Address(
+                    null,
+                    "123 Aguho St.",
+                    null,
+                    "Signal Village",
+                    "Taguig City",
+                    "National Capital Region",
+                    "1639" );
+
+            Address sellerAddress = new Address(
+                    null,
+                    "123 Aguho St.",
+                    null,
+                    "Signal Village",
+                    "Binan City",
+                    "National Capital Region",
+                    "1639" );
+
+            Address buyerAddress = new Address(
+                    null,
+                    "123 Aguho St.",
+                    null,
+                    "Signal Village",
+                    "Laoag City",
+                    "National Capital Region",
+                    "1639" );
+
+
             Role adminRole = roleRepository.findByName("ROLE_ADMIN").orElseThrow(() ->
                     new EntityDoesntExistException("Role not found"));
             Role sellerRole = roleRepository.findByName("ROLE_SELLER").orElseThrow(() ->
@@ -41,7 +81,16 @@ public class DataSeeder implements CommandLineRunner {
                     "admin@onecrop.com",
                     "admin",
                     "admin",
-                    adminRole);
+                    null,
+                    "09123456789",
+                    LocalDateTime.now(),
+                    null,
+                    null,
+                    LocalDateTime.now(),
+                    adminWallet,
+                    adminAddress,
+                    adminRole
+                    );
 
             User seller = new User(
                     null,
@@ -50,6 +99,14 @@ public class DataSeeder implements CommandLineRunner {
                     "seller@onecrop.com",
                     "seller",
                     "seller",
+                    null,
+                    "09123456780",
+                    LocalDateTime.now(),
+                    null,
+                    null,
+                    LocalDateTime.now(),
+                    sellerWallet,
+                    sellerAddress,
                     sellerRole);
 
             User buyer = new User(
@@ -59,11 +116,30 @@ public class DataSeeder implements CommandLineRunner {
                     "buyer@onecrop.com",
                     "buyer",
                     "buyer",
+                    null,
+                    "09123456781",
+                    LocalDateTime.now(),
+                    null,
+                    null,
+                    LocalDateTime.now(),
+                    buyerWallet,
+                    buyerAddress,
                     buyerRole);
+
+
+
+            addressRepository.save(adminAddress);
+            addressRepository.save(sellerAddress);
+            addressRepository.save(buyerAddress);
+
+            walletRepository.save(adminWallet);
+            walletRepository.save(buyerWallet);
+            walletRepository.save(sellerWallet);
 
             userRepository.save(admin);
             userRepository.save(buyer);
             userRepository.save(seller);
+
 
         }
 

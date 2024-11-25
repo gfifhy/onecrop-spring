@@ -2,7 +2,6 @@ package com.onecrop.onecrop.model;
 
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotEmpty;
 import lombok.*;
 
 import java.util.UUID;
@@ -13,18 +12,22 @@ import java.util.UUID;
 @Setter
 @ToString
 @Entity
-@Table(name = "roles")
-public class Role {
+@Table(name = "categories")
+public class Category {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @Column(unique=true, nullable=false)
+    @Column(nullable = false)
     private String name;
 
+    @OneToOne
+    @JoinColumn(name = "category_id")
+    private Category category;
 
-    public Role(String name) {
-        this.name = name;
-    }
+    @ManyToOne
+    @JoinColumn(name = "product_id", nullable = false)
+    private Product product;
+
 }

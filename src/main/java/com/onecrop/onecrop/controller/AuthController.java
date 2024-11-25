@@ -6,6 +6,7 @@ import com.onecrop.onecrop.dto.UserResponseDto;
 import com.onecrop.onecrop.mapper.UserMapper;
 import com.onecrop.onecrop.model.User;
 import com.onecrop.onecrop.repository.UserRepository;
+import com.onecrop.onecrop.service.AuthService;
 import com.onecrop.onecrop.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
@@ -32,8 +33,8 @@ public class AuthController {
 
     private final UserService userService;
     private final UserRepository userRepository;
-    private AuthenticationManager authenticationManager;
     private UserMapper userMapper;
+    private AuthService authService;
 
     @PostMapping("/register")
     public ResponseEntity<UserResponseDto> register(@Valid @RequestBody UserRequestDto user){
@@ -44,39 +45,27 @@ public class AuthController {
     @PostMapping("/login")
     @ResponseStatus(HttpStatus.OK)
     public void login(@Valid @RequestBody LoginDto loginRequest, HttpServletRequest request) {
-        try {
-            Authentication authentication = authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(
-                            loginRequest.getUsername(),
-                            loginRequest.getPassword()
-                    )
-            );
-            SecurityContextHolder.getContext().setAuthentication(authentication);
-            request.getSession().setAttribute("SPRING_SECURITY_CONTEXT", SecurityContextHolder.getContext());
-        } catch (AuthenticationException e) {
-            throw new RuntimeException("Invalid username or password");
-        }
+        authService.login(loginRequest, request);
     }
 
 
     @GetMapping("/profile")
     @PreAuthorize("isAuthenticated()")
     public ResponseEntity<UserResponseDto> profile(HttpServletRequest request) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        User currentUser = userRepository.findByUsername(authentication.getName()).orElseThrow();
-        return new ResponseEntity<>(userMapper.userEntitytoUserResponseDto(currentUser), HttpStatus.OK);
+        return new ResponseEntity<>(authService.profile(request), HttpStatus.OK);
     }
 
     @PostMapping("/logout")
     @PreAuthorize("isAuthenticated()")
     @ResponseStatus(HttpStatus.OK)
     public void logout(HttpServletRequest request) {
-        SecurityContextHolder.clearContext();
-        request.getSession().invalidate();
+        authService.logout(request);
     }
 
 
 
+
+    // DEBUG PURPOSES ONLY
     @GetMapping("/debug/user")
     public Map<String, Object> getCurrentUser(HttpServletRequest request) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

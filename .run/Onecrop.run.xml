@@ -1,0 +1,9 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Onecrop" type="Application" factoryName="Application">
+    <option name="MAIN_CLASS_NAME" value="com.onecrop.onecrop.OnecropApplication" />
+    <module name="onecrop" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>
