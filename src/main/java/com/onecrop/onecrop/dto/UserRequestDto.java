@@ -1,5 +1,6 @@
 package com.onecrop.onecrop.dto;
 
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
@@ -27,7 +28,17 @@ public class UserRequestDto {
         @NotEmpty(message = "lastname is required")
         private String lastName;
 
+        private String avatarUrl;
+
+        @NotEmpty(message = "Contact Number is required")
+        private String contactNumber;
+
+
         @NotEmpty
         private String role;
+
+
+        @Valid
+        private AddressDto address;
 
 }

@@ -1,14 +1,14 @@
 package com.onecrop.onecrop.service;
 
 import com.onecrop.onecrop.dto.LoginDto;
+import com.onecrop.onecrop.dto.UserRequestDto;
 import com.onecrop.onecrop.dto.UserResponseDto;
+import com.onecrop.onecrop.exception.EntityDoesntExistException;
 import com.onecrop.onecrop.mapper.UserMapper;
 import com.onecrop.onecrop.model.User;
 import com.onecrop.onecrop.repository.UserRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -24,6 +24,15 @@ public class AuthService {
     private AuthenticationManager authenticationManager;
     private UserRepository userRepository;
     private UserMapper userMapper;
+    private UserService userService;
+
+    public UserResponseDto register(UserRequestDto userRequestDto) {
+        if(!userRequestDto.getRole().equalsIgnoreCase("buyer") && !userRequestDto.getRole().equalsIgnoreCase("seller")) {
+            throw new EntityDoesntExistException("Role not found");
+        }
+
+        return userService.save(userRequestDto);
+    }
 
     public void login(LoginDto loginRequest, HttpServletRequest request) {
         try {
@@ -40,7 +49,7 @@ public class AuthService {
         }
     }
 
-    public UserResponseDto profile(HttpServletRequest request) {
+    public UserResponseDto profile() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         User currentUser = userRepository.findByUsername(authentication.getName()).orElseThrow();
         return userMapper.userEntitytoUserResponseDto(currentUser);

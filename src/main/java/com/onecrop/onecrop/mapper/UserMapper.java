@@ -16,6 +16,8 @@ public class UserMapper {
         userEntity.setPassword(user.getPassword());
         userEntity.setFirstName(user.getFirstName());
         userEntity.setLastName(user.getLastName());
+        userEntity.setAvatarUrl(user.getAvatarUrl());
+        userEntity.setContactNumber(user.getContactNumber());
 
         return userEntity;
     }
@@ -27,6 +29,8 @@ public class UserMapper {
         userResponse.setFirstName(user.getFirstName());
         userResponse.setLastName(user.getLastName());
         userResponse.setRole(user.getRole());
+        userResponse.setAddress(user.getAddress());
+        userResponse.setWallet(user.getWallet());
         return userResponse;
     }
 }

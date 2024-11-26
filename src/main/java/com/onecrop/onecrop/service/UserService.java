@@ -4,11 +4,16 @@ import com.onecrop.onecrop.dto.UserRequestDto;
 import com.onecrop.onecrop.dto.UserResponseDto;
 import com.onecrop.onecrop.exception.EntityDoesntExistException;
 import com.onecrop.onecrop.exception.EntityExistException;
+import com.onecrop.onecrop.mapper.AddressMapper;
 import com.onecrop.onecrop.mapper.UserMapper;
+import com.onecrop.onecrop.model.Address;
 import com.onecrop.onecrop.model.Role;
 import com.onecrop.onecrop.model.User;
+import com.onecrop.onecrop.model.Wallet;
+import com.onecrop.onecrop.repository.AddressRepository;
 import com.onecrop.onecrop.repository.RoleRepository;
 import com.onecrop.onecrop.repository.UserRepository;
+import com.onecrop.onecrop.repository.WalletRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -26,10 +31,13 @@ import java.util.UUID;
 @Service
 public class UserService {
 
-    private final UserRepository userRepository;
     private final RoleRepository roleRepository;
-    private final UserMapper userMapper;
+    private final UserRepository userRepository;
+    private final AddressRepository addressRepository;
+    private final WalletRepository walletRepository;
     private final PasswordEncoder passwordEncoder;
+    private final UserMapper userMapper;
+    private final AddressMapper addressMapper;
 
 
     public Page<User> getAllUsers(int page, int size) {
@@ -46,10 +54,12 @@ public class UserService {
     }
 
     public UserResponseDto save(@RequestBody UserRequestDto user) {
+
         User userEntity = userMapper.userRequestDtotoUserEntity(user);
         userEntity.setPassword(passwordEncoder.encode(user.getPassword()));
 
-        Optional<Role> role= roleRepository.findByName(user.getRole());
+
+        Optional<Role> role= roleRepository.findByName("ROLE_" + user.getRole());
         if(role.isEmpty()) {
             var userRole = roleRepository.findByName("ROLE_BUYER").orElseThrow(() ->
                     new EntityDoesntExistException("Role not found: "));
@@ -66,10 +76,19 @@ public class UserService {
         if (userRepository.existsByUsername(user.getUsername())) {
             throw new EntityExistException("Username already exists.");
         }
+        //address
+        Address address = addressRepository.save(addressMapper.addressRequestDtotoAddressEntity(user.getAddress()));
+
+        //wallet
+        Wallet wallet = walletRepository.save(new Wallet());
+
+        userEntity.setWallet(wallet);
+        userEntity.setAddress(address);
 
         User savedUser = userRepository.save(userEntity);
         return userMapper.userEntitytoUserResponseDto(savedUser);
     }
+
     public UserResponseDto getUserById(UUID id) {
         return userMapper.userEntitytoUserResponseDto(
                 userRepository
