@@ -49,7 +49,7 @@ public class SecurityConfig {
                         .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
                         .csrfTokenRequestHandler(new SpaCsrfTokenRequestHandler()))
                 .authorizeHttpRequests((authorize) -> authorize
-                        .requestMatchers("/auth/**", "/").permitAll()
+                        .requestMatchers("/auth/register", "/auth/login", "/").permitAll()
                         .requestMatchers("/user/**").hasAnyAuthority("ROLE_BUYER", "ROLE_SELLER", "ROLE_ADMIN")
                         .requestMatchers("/admin/**").hasAuthority("ROLE_ADMIN")
                         .anyRequest().authenticated()
@@ -62,7 +62,11 @@ public class SecurityConfig {
                         .invalidateHttpSession(true)
                         .clearAuthentication(true)
                         .deleteCookies("JSESSIONID"))
+                .anonymous(AbstractHttpConfigurer::disable)
                 .httpBasic(AbstractHttpConfigurer::disable)
+                .exceptionHandling(exception -> exception
+                        .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))
+                )
                 .formLogin(AbstractAuthenticationFilterConfigurer::disable);
 
         return http.build();
