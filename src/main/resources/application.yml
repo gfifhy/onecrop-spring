@@ -20,4 +20,11 @@ spring:
 server:
   servlet:
     context-path: /api/v1
+    session:
+      cookie:
+        same-site: strict
+        max-age: 10
+        secure: true
+  port: 8080
+
 
