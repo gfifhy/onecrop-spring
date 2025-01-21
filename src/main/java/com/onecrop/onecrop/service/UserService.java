@@ -27,7 +27,6 @@ import java.util.Optional;
 import java.util.UUID;
 
 @AllArgsConstructor
-@RequestMapping("/auth")
 @Service
 public class UserService {
 
